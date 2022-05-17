@@ -3,7 +3,7 @@ ball = {}
 function ball:load()
    self.x, self.y = 100, 100
    self.xVel, self.yVel = 0, 0
-   self.impulse = 800
+   self.impulse = 1200
    self.vel = 5000
    self.r = 20
    self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
@@ -11,7 +11,7 @@ function ball:load()
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
    self.fixture:setRestitution(1)
 
-   self.body:setLinearDamping(2)
+   self.body:setLinearDamping(1)
 
    self.iY = 0
 end
