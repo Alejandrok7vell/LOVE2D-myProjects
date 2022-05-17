@@ -3,20 +3,22 @@ ball = {}
 function ball:load()
    self.x, self.y = 100, 100
    self.xVel, self.yVel = 0, 0
-   self.xDir, self.yDir = "neutro", "neutro"
-   self.impulse = 500
+   self.impulse = 800
    self.vel = 5000
    self.r = 20
    self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
    self.shape = love.physics.newCircleShape(self.r)
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
+   self.fixture:setRestitution(1)
+
+   self.body:setLinearDamping(2)
 
    self.iY = 0
 end
 
 function ball:update(dt)
    -- checks if the x & y ball velocity are both equal 0
-   if ball.xVel == 0 and ball.yVel == 0 then
+   if ball.xVel < 1 and ball.yVel < 1 then
 
       if love.mouse.isDown(1) and not mouseP then
          mouseP = true
@@ -28,58 +30,6 @@ function ball:update(dt)
    end
 
    ball.xVel, ball.yVel = ball.body:getLinearVelocity()
-
-   -- position X
-   if ball.xVel > 0 then
-      ball.xDir = "right"
-   elseif ball.xVel < 0 then
-      ball.xDir = "left"
-   else
-      ball.xDir = "neutro"
-   end
-
-   -- position Y
-   if ball.yVel > 0 then
-      ball.yDir = "down"
-   elseif ball.yVel < 0 then
-      ball.yDir = "up"
-   else
-      ball.yDir = "neutro"
-   end
-
-   -- Set X direction friction
-   if ball.xDir == "right" then
-      ball.xVel = ball.xVel - ball.vel * dt
-      if ball.xVel < 0 then
-         ball.xDir = "neutro"
-         ball.xVel = 0
-      end
-   elseif ball.xDir == "left" then
-      ball.xVel = ball.xVel + ball.vel * dt
-      if ball.xVel > 0 then
-         ball.xDir = "neutro"
-         ball.xVel = 0
-      end
-   end
-
-   --
-   -- Set Y direction friction
-   if ball.yDir == "down" then
-      ball.yVel = ball.yVel - ball.vel * dt
-      if ball.yVel < 0 then
-         ball.yDir = "neutro"
-         ball.yVel = 0
-      end
-   elseif ball.yDir == "up" then
-      ball.yVel = ball.yVel + ball.vel * dt
-      if ball.yVel > 0 then
-         ball.yDir = "neutro"
-         ball.yVel = 0
-      end
-   end
-   --]]
-
-   ball.body:setLinearVelocity(ball.xVel, ball.yVel)
 end
 
 function ball:draw()

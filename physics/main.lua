@@ -1,8 +1,12 @@
 require 'ball'
+require 'winMargin'
 require 'libs.trigonometry'
 
 function love.load()
    love.graphics.setBackgroundColor(0.1, 0.3, 1)
+
+   winW, winH = love.graphics.getDimensions()
+
    mouseP = false
    mouseP2 = false
 
@@ -12,6 +16,7 @@ function love.load()
    world = love.physics.newWorld(0, 0)
 
    ball:load()
+   paredes:load()
 end
 
 function love.update(dt)
