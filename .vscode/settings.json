@@ -1,0 +1,12 @@
+{
+   "Lua.diagnostics.disable": [
+      "undefined-global",
+      "redundant-parameter",
+      "lowercase-global"
+   ],
+   "Lua.runtime.version": "LuaJIT",
+   "Lua.workspace.library": [
+      "${3rd}/love2d/library"
+   ],
+   "Lua.workspace.checkThirdParty": false
+}
