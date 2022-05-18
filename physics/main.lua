@@ -29,9 +29,5 @@ end
 
 function love.draw()
    ball:draw()
-   love.graphics.print(angle(mouseX, mouseY, ball.body:getX(), ball.body:getY()))
-   love.graphics.print(angle(mouseX, mouseY, ball.body:getX(), ball.body:getY(), true), 0, 50)
-
-   love.graphics.setColor(0,0,0)
    ball:drawLine()
 end

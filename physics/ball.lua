@@ -39,8 +39,6 @@ end
 function ball:draw()
    love.graphics.setColor(1,0,0)
    love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
-
-   love.graphics.print(self.iY, 10, 100)
 end
 
 function ball:shoot()
@@ -91,10 +89,6 @@ function ball:drawLine()
    local xw = math.sin(math.rad(angulo))*hipotenusa
    local yh = math.pow(hipotenusa, 2) - math.pow(xw, 2)
 
-   love.graphics.setColor(1,1,1)
-   love.graphics.print(math.sin(math.rad(40)), 20, 100)
-   love.graphics.print(xw, 20, 110)
-
    -- converts yh to positive value for work with math.sqrt(x)
    if yh < 0 then yh = - yh end
 
@@ -109,6 +103,7 @@ function ball:drawLine()
    if mouseY < self.body:getY() then yh = -yh end
 
    if love.mouse.isDown(1) then
+      love.graphics.setColor(0, 0, 0)
 
       love.graphics.line(
          math.floor(self.body:getX() + xw),
@@ -116,13 +111,5 @@ function ball:drawLine()
          self.body:getX(),
          self.body:getY()
       )
-
-      love.graphics.setColor(0.2, 0.2, 0)
-      love.graphics.print(math.floor(self.body:getX() + xw), 300, 0)
-      love.graphics.print(math.floor(self.body:getY() + yh), 300, 10)
-
-      love.graphics.setColor(0, 0.2, 0.2)
-      love.graphics.print(hipotenusa, 300, 30)
-      love.graphics.print(angulo, 300, 40)
    end
 end
