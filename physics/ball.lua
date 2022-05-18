@@ -16,15 +16,17 @@ function ball:load()
    self.iY = 0
 end
 
-function ball:update(dt)
+function ball:update()
    -- checks if the x & y ball velocity are both equal 0
-   if ball.xVel < 1 and ball.yVel < 1 then
+   if ball.xVel == 0 and ball.yVel == 0 then
 
       if love.mouse.isDown(1) and not mouseP then
          mouseP = true
          ball.body:setLinearVelocity(0, 0)
-         ball:shoot()
       elseif not love.mouse.isDown(1) then
+         if mouseP then
+            ball:shoot()
+         end
          mouseP = false
       end
    end
@@ -61,5 +63,16 @@ function ball:shoot()
       impY = 0
    end
    self.iY = impY
-   self.body:applyLinearImpulse(impX, impY)
+   self.body:applyLinearImpulse(impX * ball:getForce(), impY * ball:getForce())
+end
+
+function ball:getForce()
+   local d1, d2 = mouseX - self.body:getX(), mouseY - self.body:getY()
+   local distancia = hipo(d1, d2)
+   local longitud = 200
+   if distancia > longitud then
+      return 1
+   else
+      return (distancia/longitud)
+   end
 end

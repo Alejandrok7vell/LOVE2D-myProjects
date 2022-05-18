@@ -33,5 +33,7 @@ function love.draw()
    love.graphics.print(angle(mouseX, mouseY, ball.body:getX(), ball.body:getY(), true), 0, 50)
 
    love.graphics.setColor(0,0,0)
-   love.graphics.line(mouseX, mouseY, ball.body:getX(), ball.body:getY())
+   if love.mouse.isDown(1) then
+      love.graphics.line(mouseX, mouseY, ball.body:getX(), ball.body:getY())
+   end
 end
