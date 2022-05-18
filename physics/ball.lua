@@ -4,7 +4,6 @@ function ball:load()
    self.x, self.y = 100, 100
    self.xVel, self.yVel = 0, 0
    self.impulse = 1200
-   self.vel = 5000
    self.r = 20
    self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
    self.shape = love.physics.newCircleShape(self.r)
