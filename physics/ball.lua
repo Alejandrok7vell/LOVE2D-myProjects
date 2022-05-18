@@ -9,13 +9,13 @@ function ball:load()
    self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
    self.shape = love.physics.newCircleShape(self.r)
    self.fixture = love.physics.newFixture(self.body, self.shape, 1)
+   -- ball bounce value
    self.fixture:setRestitution(1)
 
    self.radio = 200
 
+   -- ball air friction
    self.body:setLinearDamping(1)
-
-   self.iY = 0
 end
 
 function ball:update()
@@ -62,7 +62,6 @@ function ball:shoot()
    else
       impY = 0
    end
-   self.iY = impY
    self.body:applyLinearImpulse(impX * ball:getForce(), impY * ball:getForce())
 end
 
