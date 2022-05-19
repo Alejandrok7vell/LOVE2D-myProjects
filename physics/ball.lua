@@ -1,4 +1,4 @@
-function newBall()
+function newBall(index)
    local ball = {}
 
    function ball:load(x, y, r, t)
@@ -13,6 +13,8 @@ function newBall()
       self.isTeam = true
       self.isStop = true
       self.ready = true
+
+      self.index = index or 1
       -- ball bounce value
       self.fixture:setRestitution(1)
 

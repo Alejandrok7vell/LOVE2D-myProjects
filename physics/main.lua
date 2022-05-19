@@ -20,7 +20,7 @@ function love.load()
    ballsLength = 3
    ballsStoped = 0
    for i = 1, ballsLength, 1 do
-      table.insert(balls, newBall())
+      table.insert(balls, newBall(i))
    end
 
    balls[1]:load(200, 200, 50)
