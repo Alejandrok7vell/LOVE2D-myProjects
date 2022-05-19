@@ -8,7 +8,6 @@ function love.load()
    winW, winH = love.graphics.getDimensions()
 
    mouseP = false
-   mouseP2 = false
 
    mouseX, mouseY = love.mouse.getPosition()
 
