@@ -15,7 +15,9 @@ function love.load()
    world = love.physics.newWorld(0, 0)
 
    balls = {}
-   table.insert(balls, newBall())
+   for i = 1, 2, 1 do
+      table.insert(balls, newBall())
+   end
 
    balls[1]:load(200, 200)
    paredes:load()
