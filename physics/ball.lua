@@ -1,10 +1,10 @@
-function newBall(index)
+function newBall()
    local ball = {}
 
    function ball:load(x, y, r, t)
       self.x, self.y = x or 100, y or 100
       self.xVel, self.yVel = 0, 0
-      self.impulse = 2000
+      self.impulse = 1500
       self.r = r or 20
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
@@ -13,15 +13,22 @@ function newBall(index)
       self.isTeam = true
       self.isStop = true
       self.ready = true
+      self.selected = false
+      self.locked = false
 
-      self.index = index or 1
+      if self.team == 1 then
+         self.color = toRGB(176, 35, 21)
+      elseif self.team == 2 then
+         self.color = toRGB(81, 176, 21)
+      end
+
       -- ball bounce value
       self.fixture:setRestitution(1)
 
       self.radio = 200
 
       -- ball air friction
-      self.body:setLinearDamping(1)
+      self.body:setLinearDamping(0.75)
    end
 
    function ball:update()
@@ -36,7 +43,7 @@ function newBall(index)
 
          self.isStop = true
 
-         if self.isTeam and self.ready then
+         if self.isTeam and self.ready and self.selected and not self.locked then
 
             if love.mouse.isDown(1) and not mouseP then
                mouseP = true
@@ -46,9 +53,29 @@ function newBall(index)
                   ball:shoot()
                   self.isStop = false
                   self.ready = false
+
+                  if self.team == 1 then
+                     changeTeam(2)
+                  elseif self.team == 2 then
+                     changeTeam(1)
+                  end
                end
                mouseP = false
             end
+         end
+
+         if love.mouse.isDown(1) and not self.locked then
+            if mouseX > self.body:getX() - self.r and
+               mouseX < self.body:getX() + self.r and
+               mouseY > self.body:getY() - self.r and
+               mouseY < self.body:getY() + self.r then
+                  self.selected = true
+                  lockBalls(true)
+                  self.locked = false
+            end
+         elseif not love.mouse.isDown(1) then
+            self.selected = false
+            lockBalls(false)
          end
       else
          self.isStop = false
@@ -59,7 +86,7 @@ function newBall(index)
    end
 
    function ball:draw()
-      love.graphics.setColor(1,0,0)
+      love.graphics.setColor(self.color)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end
 
@@ -99,7 +126,7 @@ function newBall(index)
    end
 
    function ball:drawLine()
-      if self.isTeam and self.ready then
+      if self.isTeam and self.ready and self.selected and not self.locked then
          local angulo = angle(mouseX, mouseY, self.body:getX(), self.body:getY())
          local radio = self.radio
          local hipotenusa = hipo(mouseX-self.body:getX(), mouseY-self.body:getY())
@@ -143,4 +170,3 @@ function newBall(index)
 
    return ball
 end
-

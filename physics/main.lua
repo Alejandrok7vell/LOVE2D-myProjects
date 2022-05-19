@@ -1,3 +1,4 @@
+require 'libs.utils'
 require 'ball'
 require 'winMargin'
 require 'libs.trigonometry'
@@ -19,6 +20,7 @@ function love.load()
    balls = {}
    ballsLength = 3
    ballsStoped = 0
+   ballSelected = 0
    for i = 1, ballsLength, 1 do
       table.insert(balls, newBall(i))
    end
@@ -63,5 +65,17 @@ function areBallsStoped()
          for i = 1, ballsLength, 1 do
             balls[i].ready = false
          end
+   end
+end
+
+function changeTeam(n)
+   for key in pairs(balls) do
+      balls[key]:setCurrentTeam(n)
+   end
+end
+
+function lockBalls(s)
+   for key in pairs(balls) do
+      balls[key].locked = s
    end
 end
