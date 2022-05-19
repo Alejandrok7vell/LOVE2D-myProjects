@@ -15,19 +15,26 @@ function love.load()
    love.physics.setMeter(64)
    world = love.physics.newWorld(0, 0)
 
-   ball:load()
+   balls = {}
+   table.insert(balls, newBall())
+
+   balls[1]:load(200, 200)
    paredes:load()
 end
 
 function love.update(dt)
    world:update(dt)
 
-   ball:update(dt)
+   for key in pairs(balls) do
+      balls[key]:update()
+   end
 
    mouseX, mouseY = love.mouse.getPosition()
 end
 
 function love.draw()
-   ball:draw()
-   ball:drawLine()
+   for key in pairs(balls) do
+      balls[key]:draw()
+      balls[key]:drawLine()
+   end
 end
