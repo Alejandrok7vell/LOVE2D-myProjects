@@ -170,3 +170,27 @@ function newBall()
 
    return ball
 end
+
+function newBalon()
+   local b = {}
+   function b:load()
+      self.x, self.y = winW / 2, winH / 2
+      self.r = 10
+
+      self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
+      self.shape = love.physics.newCircleShape(self.r)
+      self.fixture = love.physics.newFixture(self.body, self.shape, 0.25)
+
+
+   end
+
+   function b:update()
+      if self.body:getX() < 0 - self.r then
+         self.body:setPosition(winW / 2, winH / 2)
+      end
+   end
+
+   function b:draw()
+      
+   end
+end
