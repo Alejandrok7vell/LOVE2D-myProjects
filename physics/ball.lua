@@ -185,7 +185,7 @@ function newBalon()
    end
 
    function b:update()
-      if self.body:getX() < 0 - self.r then
+      if self.body:getX() < 0 - self.r*2 or self.body:getX() > winW + self.r*2 then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end
@@ -194,4 +194,6 @@ function newBalon()
       love.graphics.setColor(1, 1, 1)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end
+
+   return b
 end

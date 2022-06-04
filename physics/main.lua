@@ -29,6 +29,8 @@ function love.load()
    balls[2]:load(400, 300, 50, 2)
    balls[3]:load(500, 100, 50, 2)
 
+   ballon = newBalon()
+
    for key in pairs(balls) do
       balls[key]:setCurrentTeam(team)
    end
