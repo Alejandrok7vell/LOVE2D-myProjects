@@ -21,8 +21,8 @@ function paredes:load()
    self.p4.shape = love.physics.newRectangleShape(winW, 20)
    self.p4.fixture = love.physics.newFixture(self.p4.body, self.p4.shape)
 
-   self.p1.fixture:setFriction(0)
-   self.p2.fixture:setFriction(0)
-   self.p3.fixture:setFriction(0)
-   self.p4.fixture:setFriction(0)
+   self.p1.fixture:setUserData("wallUp")
+   self.p2.fixture:setUserData("wallLeft")
+   self.p3.fixture:setUserData("wallRight")
+   self.p4.fixture:setUserData("wallDown")
 end

@@ -1,11 +1,9 @@
-require 'libs.utils'
-require 'ball'
-require 'winMargin'
-require 'libs.trigonometry'
+require 'scenes.game'
 
 function love.load()
    love.graphics.setBackgroundColor(0.1, 0.3, 1)
 
+   currentScene = 1
    winW, winH = love.graphics.getDimensions()
 
    mouseP = false
@@ -14,70 +12,40 @@ function love.load()
 
    love.physics.setMeter(64)
    world = love.physics.newWorld(0, 0)
+      world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
-   team = 2
+   scenes = {}
+   table.insert(scenes, gameS)
 
-   balls = {}
-   ballsLength = 3
-   ballsStoped = 0
-   ballSelected = 0
-   for i = 1, ballsLength, 1 do
-      table.insert(balls, newBall(i))
-   end
-
-   balls[1]:load(200, 200, 50)
-   balls[2]:load(400, 300, 50, 2)
-   balls[3]:load(500, 100, 50, 2)
-
-   ballon = newBalon()
-
-   for key in pairs(balls) do
-      balls[key]:setCurrentTeam(team)
-   end
-   paredes:load()
+   scenes[currentScene]:load()
 end
 
 function love.update(dt)
    world:update(dt)
-
-   for key in pairs(balls) do
-      balls[key]:update()
-   end
-
-   areBallsStoped()
-
-   mouseX, mouseY = love.mouse.getPosition()
+   scenes[currentScene]:update()
 end
 
 function love.draw()
-   for key in pairs(balls) do
-      balls[key]:draw()
-      balls[key]:drawLine()
+   scenes[currentScene]:draw()
+end
+
+-- World Collision Callbacks
+function beginContact(x, y, coll)
+   local a, b = x, y
+   local collision = coll
+   if currentScene == 1 then
+      scenes[currentScene]:beginContact(a, b)
    end
 end
 
-function areBallsStoped()
-   if balls[1].isStop and
-      balls[2].isStop and
-      balls[3].isStop then
-         for i = 1, ballsLength, 1 do
-            balls[i].ready = true
-         end
-      else
-         for i = 1, ballsLength, 1 do
-            balls[i].ready = false
-         end
-   end
+function endContact(a, b, coll)
+   -- nothing for now
 end
 
-function changeTeam(n)
-   for key in pairs(balls) do
-      balls[key]:setCurrentTeam(n)
-   end
+function preSolve(a, b, coll)
+   -- nothing for now
 end
 
-function lockBalls(s)
-   for key in pairs(balls) do
-      balls[key].locked = s
-   end
+function postSolve(a, b, coll, normalimpulse, tangentimpulse)
+   -- nothing for now
 end

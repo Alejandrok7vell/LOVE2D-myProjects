@@ -9,6 +9,7 @@ function newBall()
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
       self.fixture = love.physics.newFixture(self.body, self.shape, 0.5)
+      self.fixture:setUserData(self.ud)
       self.team = t or 1
       self.isTeam = true
       self.isStop = true
@@ -29,6 +30,10 @@ function newBall()
 
       -- ball air friction
       self.body:setLinearDamping(0.75)
+   end
+
+   function ball:setUD(ud)
+      self.ud = ud
    end
 
    function ball:update()
@@ -161,6 +166,22 @@ function newBall()
                self.body:getY()
             )
          end
+      end
+   end
+
+   function ball:collision(a, b)
+      if a:getUserData() == self.ud and b:getUserData() == "wallUp" then
+         local x, y = self:getLinearVelocity()
+         self.body:setLinearVelocity(x, 100)
+      elseif a:getUserData() == self.ud and b:getUserData() == "wallRight" then
+         local x, y = self:getLinearVelocity()
+         self.body:setLinearVelocity(-100, y)
+      elseif a:getUserData() == self.ud and b:getUserData() == "wallDown" then
+         local x, y = self:getLinearVelocity()
+         self.body:setLinearVelocity(x, -100)
+      elseif a:getUserData() == self.ud and b:getUserData() == "wallLeft" then
+         local x, y = self:getLinearVelocity()
+         self.body:setLinearVelocity(100, y)
       end
    end
 
