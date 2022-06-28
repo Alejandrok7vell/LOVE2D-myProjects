@@ -210,13 +210,16 @@ function newBalon()
    local b = {}
    function b:load()
       self.x, self.y = winW / 2, winH / 2
-      self.r = 10
+      self.r = 20
+      self.color = toRGB(255, 255, 255)
 
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
-      self.fixture = love.physics.newFixture(self.body, self.shape, 0.25)
+      self.fixture = love.physics.newFixture(self.body, self.shape, 0.45)
+      self.fixture:setRestitution(1)
+      self.body:setLinearDamping(0.75)
 
-
+      self.fixture:setUserData("balon")
    end
 
    function b:update()
@@ -228,6 +231,36 @@ function newBalon()
    function b:draw()
       love.graphics.setColor(1, 1, 1)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
+   end
+
+   function b.beginContact(a, c)
+      local data1, data2 = a, c
+      if data1 == "balon" or data2 == "balon" then
+         if data1 == "wallUp" or data2 == "wallUp" then
+            b.body:applyLinearImpulse(0, 5)
+         elseif data1 == "wallLeft" or data2 == "wallLeft" then
+            b.body:applyLinearImpulse(5, 0)
+         elseif data1 == "wallRight" or data2 == "wallRight" then
+            b.body:applyLinearImpulse(-5, 0)
+         elseif data1 == "wallDown" or data2 == "wallDown" then
+            b.body:applyLinearImpulse(0, -5)
+         end
+      end
+   end
+
+   function b.preSolve(a, c)
+      local data1, data2 = a, c
+      if data1 == "balon" or data2 == "balon" then
+         if data1 == "wallUp" or data2 == "wallUp" then
+            b.body:applyLinearImpulse(0, 5)
+         elseif data1 == "wallLeft" or data2 == "wallLeft" then
+            b.body:applyLinearImpulse(5, 0)
+         elseif data1 == "wallRight" or data2 == "wallRight" then
+            b.body:applyLinearImpulse(-5, 0)
+         elseif data1 == "wallDown" or data2 == "wallDown" then
+            b.body:applyLinearImpulse(0, -5)
+         end
+      end
    end
 
    return b

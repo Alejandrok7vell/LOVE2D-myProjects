@@ -21,7 +21,8 @@ function gameS:load()
    balls[2]:load(400, 300, 50, 2)
    balls[3]:load(500, 100, 50, 2)
 
-   ballon = newBalon()
+   balon = newBalon()
+   balon:load()
 
    for key in pairs(balls) do
       balls[key]:setCurrentTeam(team)
@@ -36,6 +37,8 @@ function gameS:update()
 
    areBallsStoped()
 
+   balon:update()
+
    mouseX, mouseY = love.mouse.getPosition()
 end
 
@@ -44,6 +47,7 @@ function gameS:draw()
       balls[key]:draw()
       balls[key]:drawLine()
    end
+   balon:draw()
 end
 
 function gameS:beginContact(a, b)
@@ -51,6 +55,7 @@ function gameS:beginContact(a, b)
    for key in pairs(balls) do
       balls[key].beginContact(data1, data2)
    end
+   balon.beginContact(data1, data2)
 end
 
 function gameS:preSolve(a, b)
@@ -58,6 +63,7 @@ function gameS:preSolve(a, b)
    for key in pairs(balls) do
       balls[key].preSolve(data1, data2)
    end
+   balon.beginContact(data1, data2)
 end
 
 function areBallsStoped()
