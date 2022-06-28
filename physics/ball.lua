@@ -169,22 +169,6 @@ function newBall()
       end
    end
 
-   function ball:collision(a, b)
-      if a:getUserData() == self.ud and b:getUserData() == "wallUp" then
-         local x, y = self:getLinearVelocity()
-         self.body:setLinearVelocity(x, 100)
-      elseif a:getUserData() == self.ud and b:getUserData() == "wallRight" then
-         local x, y = self:getLinearVelocity()
-         self.body:setLinearVelocity(-100, y)
-      elseif a:getUserData() == self.ud and b:getUserData() == "wallDown" then
-         local x, y = self:getLinearVelocity()
-         self.body:setLinearVelocity(x, -100)
-      elseif a:getUserData() == self.ud and b:getUserData() == "wallLeft" then
-         local x, y = self:getLinearVelocity()
-         self.body:setLinearVelocity(100, y)
-      end
-   end
-
    function ball:setCurrentTeam(t)
       self.current = t
    end
