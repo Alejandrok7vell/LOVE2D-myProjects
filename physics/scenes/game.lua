@@ -47,29 +47,17 @@ function gameS:draw()
 end
 
 function gameS:beginContact(a, b)
-   contactos(1, a, b)
-   contactos(2, a, b)
-   contactos(3, a, b)
-
-   print(a:getUserData())
-   print(b:getUserData())
+   local data1, data2 = a:getUserData(), b:getUserData()
+   for key in pairs(balls) do
+      balls[key].beginContact(data1, data2)
+   end
 end
 
-function contactos(n, a, b)
-   local i = n
-   if a:getUserData() == "ball"..i and b:getUserData() == "wallUp" or
-      a:getUserData() == "wallUp" and b:getUserData() == "ball"..i then
-         balls[i].body:applyLinearImpulse(0, 40)
-      elseif a:getUserData() == "ball"..i and b:getUserData() == "wallLeft" or
-      a:getUserData() == "wallLeft" and b:getUserData() == "ball"..i then
-         balls[i].body:applyLinearImpulse(40, 0)
-      elseif a:getUserData() == "ball"..i and b:getUserData() == "wallDown" or
-      a:getUserData() == "wallDown" and b:getUserData() == "ball"..i then
-         balls[i].body:applyLinearImpulse(0, -40)
-      elseif a:getUserData() == "ball"..i and b:getUserData() == "wallRight" or
-      a:getUserData() == "wallRight" and b:getUserData() == "ball"..i then
-         balls[i].body:applyLinearImpulse(-40, 0)
-      end
+function gameS:preSolve(a, b)
+   local data1, data2 = a:getUserData(), b:getUserData()
+   for key in pairs(balls) do
+      balls[key].preSolve(data1, data2)
+   end
 end
 
 function areBallsStoped()

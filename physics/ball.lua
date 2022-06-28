@@ -173,6 +173,36 @@ function newBall()
       self.current = t
    end
 
+   function ball.beginContact(a, b)
+      local data1, data2 = a, b
+      if data1 == ball.ud or data2 == ball.ud then
+         if data1 == "wallUp" or data2 == "wallUp" then
+            ball.body:applyLinearImpulse(0, 10)
+         elseif data1 == "wallLeft" or data2 == "wallLeft" then
+            ball.body:applyLinearImpulse(10, 0)
+         elseif data1 == "wallRight" or data2 == "wallRight" then
+            ball.body:applyLinearImpulse(-10, 0)
+         elseif data1 == "wallDown" or data2 == "wallDown" then
+            ball.body:applyLinearImpulse(0, -10)
+         end
+      end
+   end
+
+   function ball.preSolve(a, b)
+      local data1, data2 = a, b
+      if data1 == ball.ud or data2 == ball.ud then
+         if data1 == "wallUp" or data2 == "wallUp" then
+            ball.body:applyLinearImpulse(0, 10)
+         elseif data1 == "wallLeft" or data2 == "wallLeft" then
+            ball.body:applyLinearImpulse(10, 0)
+         elseif data1 == "wallRight" or data2 == "wallRight" then
+            ball.body:applyLinearImpulse(-10, 0)
+         elseif data1 == "wallDown" or data2 == "wallDown" then
+            ball.body:applyLinearImpulse(0, -10)
+         end
+      end
+   end
+
    return ball
 end
 

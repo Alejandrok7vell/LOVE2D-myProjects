@@ -32,7 +32,6 @@ end
 -- World Collision Callbacks
 function beginContact(x, y, coll)
    local a, b = x, y
-   local collision = coll
    if currentScene == 1 then
       scenes[currentScene]:beginContact(a, b)
    end
@@ -42,8 +41,11 @@ function endContact(a, b, coll)
    -- nothing for now
 end
 
-function preSolve(a, b, coll)
-   -- nothing for now
+function preSolve(x, y, coll)
+   local a, b = x, y
+   if currentScene == 1 then
+      scenes[currentScene]:preSolve(a, b)
+   end
 end
 
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)
