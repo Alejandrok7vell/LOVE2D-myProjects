@@ -9,7 +9,7 @@ function gameS:load()
    team = 2
 
    balls = {}
-   ballsLength = 3
+   ballsLength = 10
    ballsStoped = 0
    ballSelected = 0
    for i = 1, ballsLength, 1 do
@@ -18,8 +18,15 @@ function gameS:load()
    end
 
    balls[1]:load(200, 200, 50)
-   balls[2]:load(400, 300, 50, 2)
-   balls[3]:load(500, 100, 50, 2)
+   balls[2]:load(400, 300, 50)
+   balls[3]:load(100, 500, 50)
+   balls[4]:load(500, 100, 50)
+   balls[5]:load(300, 300, 50)
+   balls[6]:load(600, 100, 50, 2)
+   balls[7]:load(650, 200, 50, 2)
+   balls[8]:load(500, 300, 50, 2)
+   balls[9]:load(500, 400, 50, 2)
+   balls[10]:load(500, 500, 50, 2)
 
    balon = newBalon()
    balon:load()
@@ -69,7 +76,14 @@ end
 function areBallsStoped()
    if balls[1].isStop and
       balls[2].isStop and
-      balls[3].isStop then
+      balls[3].isStop and
+      balls[4].isStop and
+      balls[5].isStop and
+      balls[6].isStop and
+      balls[7].isStop and
+      balls[8].isStop and
+      balls[9].isStop and
+      balls[10].isStop then
          for i = 1, ballsLength, 1 do
             balls[i].ready = true
          end

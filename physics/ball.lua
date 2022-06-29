@@ -215,7 +215,7 @@ function newBalon()
 
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
-      self.fixture = love.physics.newFixture(self.body, self.shape, 0.45)
+      self.fixture = love.physics.newFixture(self.body, self.shape, 0.9)
       self.fixture:setRestitution(1)
       self.body:setLinearDamping(0.75)
 
