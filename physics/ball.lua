@@ -224,7 +224,7 @@ function newBalon()
    end
 
    function b:update()
-      if self.body:getX() < self.wx1 - self.r*2 or self.body:getX() > self.wx2 + self.r*2 then
+      if self.body:getX() < self.wx1 - self.r or self.body:getX() > self.wx2 + self.r then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end
@@ -234,34 +234,45 @@ function newBalon()
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end
 
-   function b.beginContact(a, c)
+   function b.beginContact(a, c, x)
       local data1, data2 = a, c
+      local cx = x
       if data1 == "balon" or data2 == "balon" then
          if data1 == "wallUp" or data2 == "wallUp" then
             b.body:applyLinearImpulse(0, 5)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
-            b.body:applyLinearImpulse(5, 0)
+            if cx == 1 then
+               b.body:applyLinearImpulse(5, 0)
+            end
          elseif data1 == "wallRight" or data2 == "wallRight" then
-            b.body:applyLinearImpulse(-5, 0)
+            if cx == -1 then
+               b.body:applyLinearImpulse(-5, 0)
+            end
          elseif data1 == "wallDown" or data2 == "wallDown" then
             b.body:applyLinearImpulse(0, -5)
          end
       end
    end
 
-   function b.preSolve(a, c)
+   function b.preSolve(a, c, x)
       local data1, data2 = a, c
+      local cx = x
       if data1 == "balon" or data2 == "balon" then
          if data1 == "wallUp" or data2 == "wallUp" then
             b.body:applyLinearImpulse(0, 5)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
-            b.body:applyLinearImpulse(5, 0)
+            if cx == 1 then
+               b.body:applyLinearImpulse(5, 0)
+            end
          elseif data1 == "wallRight" or data2 == "wallRight" then
-            b.body:applyLinearImpulse(-5, 0)
+            if cx == -1 then
+               b.body:applyLinearImpulse(-5, 0)
+            end
          elseif data1 == "wallDown" or data2 == "wallDown" then
             b.body:applyLinearImpulse(0, -5)
          end
       end
+      print(cx)
    end
 
    return b

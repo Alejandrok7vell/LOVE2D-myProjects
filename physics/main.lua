@@ -36,8 +36,9 @@ end
 -- World Collision Callbacks
 function beginContact(x, y, coll)
    local a, b = x, y
+   local colision = coll
    if currentScene == 1 then
-      scenes[currentScene]:beginContact(a, b)
+      scenes[currentScene]:beginContact(a, b, colision)
    end
 end
 
@@ -47,8 +48,9 @@ end
 
 function preSolve(x, y, coll)
    local a, b = x, y
+   local colision = coll
    if currentScene == 1 then
-      scenes[currentScene]:preSolve(a, b)
+      scenes[currentScene]:preSolve(a, b, colision)
    end
 end
 

@@ -33,7 +33,7 @@ function gameS:load()
    end
    paredes:load(
       winW/2, winH/2,
-      winW-100, winH-50,
+      winW-300, winH-150,
       winH / 3
    )
 
@@ -63,20 +63,22 @@ function gameS:draw()
    paredes:draw()
 end
 
-function gameS:beginContact(a, b)
+function gameS:beginContact(a, b, coll)
    local data1, data2 = a:getUserData(), b:getUserData()
+   local x, y = coll:getNormal()
    for key in pairs(balls) do
       balls[key].beginContact(data1, data2)
    end
-   balon.beginContact(data1, data2)
+   balon.beginContact(data1, data2, x)
 end
 
-function gameS:preSolve(a, b)
+function gameS:preSolve(a, b, coll)
    local data1, data2 = a:getUserData(), b:getUserData()
+   local x, y = coll:getNormal()
    for key in pairs(balls) do
       balls[key].preSolve(data1, data2)
    end
-   balon.beginContact(data1, data2)
+   balon.beginContact(data1, data2, x)
 end
 
 function areBallsStoped()
