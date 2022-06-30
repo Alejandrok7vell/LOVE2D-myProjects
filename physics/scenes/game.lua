@@ -6,6 +6,7 @@ require 'libs.trigonometry'
 gameS = {}
 
 function gameS:load()
+   love.graphics.setBackgroundColor(toRGB(100, 130, 180))
    team = 2
 
    balls = {}

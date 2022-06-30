@@ -18,9 +18,9 @@ function newBall()
       self.locked = false
 
       if self.team == 1 then
-         self.color = toRGB(176, 35, 21)
+         self.color = toRGB(252, 144, 86)
       elseif self.team == 2 then
-         self.color = toRGB(81, 176, 21)
+         self.color = toRGB(86, 252, 125)
       end
 
       -- ball bounce value
@@ -272,7 +272,6 @@ function newBalon()
             b.body:applyLinearImpulse(0, -5)
          end
       end
-      print(cx)
    end
 
    return b

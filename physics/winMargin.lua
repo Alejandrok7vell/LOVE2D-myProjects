@@ -31,10 +31,19 @@ function paredes:load(x, y, w, h, z)
    self.p4.shape = love.physics.newRectangleShape(w + 40, 20)
    self.p4.fixture = love.physics.newFixture(self.p4.body, self.p4.shape)
 
-   self.cl1 = {} -- C Left
-   self.cl1.body = love.physics.newBody(world, x-(w/2)-cw, y, "static")
-   self.cl1.shape = love.physics.newRectangleShape(10, z)
-   self.cl1.fixture = love.physics.newFixture(self.p4.body, self.p4.shape)
+   -- C Left
+   self.cl1 = {} -- Up
+   self.cl1.body = love.physics.newBody(world, x-(w/2)-(cw/2), y-(z/2)-5, "static")
+   self.cl1.shape = love.physics.newRectangleShape(cw, 10)
+   self.cl1.fixture = love.physics.newFixture(self.cl1.body, self.cl1.shape)
+   self.cl2 = {} -- Down
+   self.cl2.body = love.physics.newBody(world, x-(w/2)-(cw/2), y+(z/2)+5, "static")
+   self.cl2.shape = love.physics.newRectangleShape(cw, 10)
+   self.cl2.fixture = love.physics.newFixture(self.cl2.body, self.cl2.shape)
+   self.cl3 = {} -- Center
+   self.cl3.body = love.physics.newBody(world, x-(w/2)-cw, y, "static")
+   self.cl3.shape = love.physics.newRectangleShape(10, z+20)
+   self.cl3.fixture = love.physics.newFixture(self.cl3.body, self.cl3.shape)
 
    self.p1.fixture:setFriction(0)
    self.p2.fixture:setFriction(0)
@@ -73,5 +82,15 @@ function paredes:draw()
    )
    love.graphics.polygon(
       "fill", self.p3b.body:getWorldPoints(self.p3b.shape:getPoints())
+   )
+
+   love.graphics.polygon(
+      "fill", self.cl1.body:getWorldPoints(self.cl1.shape:getPoints())
+   )
+   love.graphics.polygon(
+      "fill", self.cl2.body:getWorldPoints(self.cl2.shape:getPoints())
+   )
+   love.graphics.polygon(
+      "fill", self.cl3.body:getWorldPoints(self.cl3.shape:getPoints())
    )
 end
