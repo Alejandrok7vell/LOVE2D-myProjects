@@ -28,13 +28,17 @@ function gameS:load()
    balls[9]:load(500, 400, 50, 2)
    balls[10]:load(500, 500, 50, 2)
 
-   balon = newBalon()
-   balon:load()
-
    for key in pairs(balls) do
       balls[key]:setCurrentTeam(team)
    end
-   paredes:load()
+   paredes:load(
+      winW/2, winH/2,
+      winW-100, winH-50,
+      winH / 3
+   )
+
+   balon = newBalon()
+   balon:load(paredes.p2.body:getX(), paredes.p3.body:getX())
 end
 
 function gameS:update()
@@ -55,6 +59,8 @@ function gameS:draw()
       balls[key]:drawLine()
    end
    balon:draw()
+
+   paredes:draw()
 end
 
 function gameS:beginContact(a, b)

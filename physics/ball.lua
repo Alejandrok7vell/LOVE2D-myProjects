@@ -208,8 +208,9 @@ end
 
 function newBalon()
    local b = {}
-   function b:load()
+   function b:load(x1, x2)
       self.x, self.y = winW / 2, winH / 2
+      self.wx1, self.wx2 = x1, x2
       self.r = 20
       self.color = toRGB(255, 255, 255)
 
@@ -223,7 +224,7 @@ function newBalon()
    end
 
    function b:update()
-      if self.body:getX() < 0 - self.r*2 or self.body:getX() > winW + self.r*2 then
+      if self.body:getX() < self.wx1 - self.r*2 or self.body:getX() > self.wx2 + self.r*2 then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end
