@@ -17,6 +17,16 @@ function newBall()
       self.selected = false
       self.locked = false
 
+      self.flecha = {}
+      self.flecha.img = love.graphics.newImage('assets/flecha1.png')
+      self.flecha.color = {}
+      self.flecha.colors = {
+         toRGB(119, 184, 230),
+         toRGB(245, 245, 88),
+         toRGB(237, 145, 40),
+         toRGB(209, 15, 15)
+      }
+
       if self.team == 1 then
          self.color = toRGB(252, 144, 86)
       elseif self.team == 2 then
@@ -96,9 +106,9 @@ function newBall()
    end
 
    function ball:shoot()
-      local angulo = angle(mouseX, mouseY, self.body:getX(), self.body:getY())
+      local angulo = angles(mouseX, mouseY, self.body:getX(), self.body:getY())
       local impX = (self.impulse/90) * angulo
-      angulo = angle(mouseX, mouseY, self.body:getX(), self.body:getY(), true)
+      angulo = angles(mouseX, mouseY, self.body:getX(), self.body:getY(), true)
       local impY = (self.impulse/90) * angulo
 
       if mouseX > self.body:getX() then
@@ -130,11 +140,27 @@ function newBall()
       end
    end
 
+   function ball:updateLine()
+      local fuerza = self:getForce()
+      if fuerza > 0 and fuerza < 0.25 then
+         self.flecha.color = 1
+      elseif fuerza > 0.25 and fuerza < 0.5 then
+         self.flecha.color = 2
+      elseif fuerza > 0.5 and fuerza < 0.75 then
+         self.flecha.color = 3
+      elseif fuerza > 0.75 then
+         self.flecha.color = 4
+      end
+   end
+
    function ball:drawLine()
+      --love.graphics.push()
       if self.isTeam and self.ready and self.selected and not self.locked then
-         local angulo = angle(mouseX, mouseY, self.body:getX(), self.body:getY())
+         local angulo = angles(mouseX, mouseY, self.body:getX(), self.body:getY())
          local radio = self.radio
          local hipotenusa = hipo(mouseX-self.body:getX(), mouseY-self.body:getY())
+         local angle = math.atan2((mouseY - self.body:getY()), (mouseX - self.body:getX()))
+         angle = angle + 2.35619
 
          -- looks mouse distance value to radio value
          if hipotenusa > radio then hipotenusa = radio end
@@ -165,8 +191,12 @@ function newBall()
                self.body:getX(),
                self.body:getY()
             )
+
+            love.graphics.setColor(self.flecha.colors[self.flecha.color])
+            love.graphics.draw(self.flecha.img, self.body:getX(), self.body:getY(), angle)
          end
       end
+      --love.graphics.pop()
    end
 
    function ball:setCurrentTeam(t)

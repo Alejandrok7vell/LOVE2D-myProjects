@@ -7,7 +7,7 @@ function hipo(v1, v2)
    return h
 end
 
-function angle(x1, y1, x2, y2, l, f)
+function angles(x1, y1, x2, y2, l, f)
    local p1, p2 = {x1, y1}, {x2, y2}
 
    local side = l or false

@@ -45,6 +45,7 @@ end
 function gameS:update()
    for key in pairs(balls) do
       balls[key]:update()
+      balls[key]:updateLine()
    end
 
    areBallsStoped()
@@ -57,6 +58,8 @@ end
 function gameS:draw()
    for key in pairs(balls) do
       balls[key]:draw()
+   end
+   for key in pairs(balls) do
       balls[key]:drawLine()
    end
    balon:draw()
