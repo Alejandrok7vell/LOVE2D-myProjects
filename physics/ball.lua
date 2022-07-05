@@ -27,6 +27,8 @@ function newBall()
          toRGB(209, 15, 15)
       }
       self.flecha.vel = 0.01
+      self.flecha.sx = 1
+      self.flecha.sy = 1
 
       if self.team == 1 then
          self.color = toRGB(252, 144, 86)
@@ -155,6 +157,14 @@ function newBall()
          elseif fuerza > 0.75 then
             self.flecha.color = self:changeColor(self.flecha.color, self.flecha.colors[4])
          end
+         fuerza = fuerza + 0.25
+         if fuerza < 0.5 then
+            self.flecha.sx, self.flecha.sy = 0.5, 0.5
+         elseif fuerza > 1 then
+            self.flecha.sx, self.flecha.sy = 1, 1
+         else
+            self.flecha.sx, self.flecha.sy = fuerza, fuerza
+         end
       end
    end
 
@@ -226,7 +236,14 @@ function newBall()
                self.body:getY()
             )
 
-            love.graphics.draw(self.flecha.img, self.body:getX(), self.body:getY(), angle)
+            love.graphics.draw(
+               self.flecha.img,
+               self.body:getX(),
+               self.body:getY(),
+               angle,
+               self.flecha.sx,
+               self.flecha.sy
+            )
          end
       end
       --love.graphics.pop()
@@ -287,7 +304,7 @@ function newBalon()
    end
 
    function b:update()
-      if self.body:getX() < self.wx1 + (self.r/2) or self.body:getX() > self.wx2 - (self.r/2) then
+      if self.body:getX() < self.wx1 - (self.r/2) or self.body:getX() > self.wx2 + (self.r/2) then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end
