@@ -4,11 +4,11 @@ function newBall()
    function ball:load(x, y, r, t)
       self.x, self.y = x or 100, y or 100
       self.xVel, self.yVel = 0, 0
-      self.impulse = 1500
+      self.impulse = 2400
       self.r = r or 20
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
-      self.fixture = love.physics.newFixture(self.body, self.shape, 0.5)
+      self.fixture = love.physics.newFixture(self.body, self.shape, 0.9)
       self.fixture:setUserData(self.ud)
       self.team = t or 1
       self.isTeam = true
@@ -40,7 +40,7 @@ function newBall()
       self.radio = 200
 
       -- ball air friction
-      self.body:setLinearDamping(0.75)
+      self.body:setLinearDamping(0.95)
    end
 
    function ball:setUD(ud)
@@ -287,7 +287,7 @@ function newBalon()
    end
 
    function b:update()
-      if self.body:getX() < self.wx1 - self.r or self.body:getX() > self.wx2 + self.r then
+      if self.body:getX() < self.wx1 + (self.r/2) or self.body:getX() > self.wx2 - (self.r/2) then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end

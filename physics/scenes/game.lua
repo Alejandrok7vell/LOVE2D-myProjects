@@ -56,15 +56,14 @@ function gameS:update()
 end
 
 function gameS:draw()
+   paredes:draw()
    for key in pairs(balls) do
       balls[key]:draw()
    end
+   balon:draw()
    for key in pairs(balls) do
       balls[key]:drawLine()
    end
-   balon:draw()
-
-   paredes:draw()
 end
 
 function gameS:beginContact(a, b, coll)
