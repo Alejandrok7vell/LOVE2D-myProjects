@@ -19,13 +19,14 @@ function newBall()
 
       self.flecha = {}
       self.flecha.img = love.graphics.newImage('assets/flecha1.png')
-      self.flecha.color = {}
+      self.flecha.color = toRGB(119, 184, 230)
       self.flecha.colors = {
          toRGB(119, 184, 230),
          toRGB(245, 245, 88),
          toRGB(237, 145, 40),
          toRGB(209, 15, 15)
       }
+      self.flecha.vel = 0.01
 
       if self.team == 1 then
          self.color = toRGB(252, 144, 86)
@@ -141,16 +142,49 @@ function newBall()
    end
 
    function ball:updateLine()
-      local fuerza = self:getForce()
-      if fuerza > 0 and fuerza < 0.25 then
-         self.flecha.color = 1
-      elseif fuerza > 0.25 and fuerza < 0.5 then
-         self.flecha.color = 2
-      elseif fuerza > 0.5 and fuerza < 0.75 then
-         self.flecha.color = 3
-      elseif fuerza > 0.75 then
-         self.flecha.color = 4
+      if self.isTeam and self.ready and self.selected and not self.locked then
+
+
+         local fuerza = self:getForce()
+         if fuerza > 0 and fuerza < 0.25 then
+            self.flecha.color = self:changeColor(self.flecha.color, self.flecha.colors[1])
+         elseif fuerza > 0.25 and fuerza < 0.5 then
+            self.flecha.color = self:changeColor(self.flecha.color, self.flecha.colors[2])
+         elseif fuerza > 0.5 and fuerza < 0.75 then
+            self.flecha.color = self:changeColor(self.flecha.color, self.flecha.colors[3])
+         elseif fuerza > 0.75 then
+            self.flecha.color = self:changeColor(self.flecha.color, self.flecha.colors[4])
+         end
       end
+   end
+
+   function ball:changeColor(c1, c2)
+      local r, g, b = c1[1]*255, c1[2]*255, c1[3]*255
+      local r2, g2, b2 = c2[1]*255, c2[2]*255, c2[3]*255
+      self.flecha.vel = 10
+
+      -- changes red color
+      if r < r2 then
+         r = r + self.flecha.vel
+      elseif r > r2 then
+         r = r - self.flecha.vel
+      end
+
+      -- changes green color
+      if g < g2 then
+         g = g + self.flecha.vel
+      elseif g > g2 then
+         g = g - self.flecha.vel
+      end
+
+      -- changes blue color
+      if b < b2 then
+         b = b + self.flecha.vel
+      elseif b > b2 then
+         b = b - self.flecha.vel
+      end
+
+      return {r/255, g/255, b/255}
    end
 
    function ball:drawLine()
@@ -183,7 +217,7 @@ function newBall()
          if mouseY < self.body:getY() then yh = -yh end
 
          if love.mouse.isDown(1) then
-            love.graphics.setColor(0, 0, 0)
+            love.graphics.setColor(self.flecha.color)
 
             love.graphics.line(
                math.floor(self.body:getX() + xw),
@@ -192,7 +226,6 @@ function newBall()
                self.body:getY()
             )
 
-            love.graphics.setColor(self.flecha.colors[self.flecha.color])
             love.graphics.draw(self.flecha.img, self.body:getX(), self.body:getY(), angle)
          end
       end
