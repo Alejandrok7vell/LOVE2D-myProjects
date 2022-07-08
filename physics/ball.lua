@@ -32,8 +32,10 @@ function newBall()
 
       if self.team == 1 then
          self.color = toRGB(252, 144, 86)
+         self.color2 = toRGB(252, 144, 86, 0)
       elseif self.team == 2 then
          self.color = toRGB(86, 252, 125)
+         self.color2 = toRGB(86, 252, 125, 0)
       end
 
       -- ball bounce value
@@ -43,6 +45,51 @@ function newBall()
 
       -- ball air friction
       self.body:setLinearDamping(0.95)
+
+      -- ball trail
+      self.partic = {
+         img = love.graphics.newImage("assets/particles/1.png"),
+         x = self.body:getX(),
+         y = self.body:getY(),
+         color = self.color,
+         color2 = self.color2,
+         speed = 300
+      }
+      self.particles = love.graphics.newParticleSystem(self.partic.img, 150)
+      self.particles:setEmissionArea(
+         "uniform",
+         self.shape:getRadius()*0.7,
+         self.shape:getRadius()*0.7,
+         0,
+         false
+      )
+      self.particles:setParticleLifetime(0.3, 0.3)
+      self.particles:setEmissionRate(95)
+      self.particles:setSizes(2, 0.5)
+      self.particles:setSpeed(self.partic.speed, self.partic.speed + 100)
+      self.particles:setColors(
+         self.partic.color,
+         self.partic.color2
+      )
+
+      self.particles:stop()
+   end
+
+   function ball:particleUpdate(dt)
+      self.particles:update(dt)
+      if self.particles:isActive() then
+         local x, y = self.body:getLinearVelocity()
+         local velocity = (x+y)/2
+         if velocity < 0 then
+            velocity = -velocity
+         end
+         x = x + self.body:getX()
+         y = y + self.body:getY()
+         local angle = math.atan2((y - self.body:getY()), (x - self.body:getX()))
+         self.particles:setDirection(angle + math.pi)
+         self.particles:setSpeed(velocity, velocity * 2)
+         self.partic.x, self.partic.y = self.body:getPosition()
+      end
    end
 
    function ball:setUD(ud)
@@ -60,6 +107,7 @@ function newBall()
       if math.floor(self.xVel + 0.5) == 0 and math.floor(self.yVel + 0.5) == 0 then
 
          self.isStop = true
+         self.particles:stop()
 
          if self.isTeam and self.ready and self.selected and not self.locked then
 
@@ -77,6 +125,7 @@ function newBall()
                   elseif self.team == 2 then
                      changeTeam(1)
                   end
+                  self.particles:start()
                end
                mouseP = false
             end
@@ -106,6 +155,10 @@ function newBall()
    function ball:draw()
       love.graphics.setColor(self.color)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
+   end
+
+   function ball:drawParticles()
+      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
    end
 
    function ball:shoot()
@@ -293,6 +346,7 @@ function newBalon()
       self.wx1, self.wx2 = x1, x2
       self.r = 20
       self.color = toRGB(255, 255, 255)
+      self.color2 = toRGB(255, 255, 255, 0)
 
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
@@ -301,15 +355,58 @@ function newBalon()
       self.body:setLinearDamping(0.75)
 
       self.fixture:setUserData("balon")
+
+      -- balon trail
+      self.partic = {
+         img = love.graphics.newImage("assets/particles/1.png"),
+         x = self.body:getX(),
+         y = self.body:getY(),
+         color = self.color,
+         color2 = self.color2,
+         speed = 300
+      }
+      self.particles = love.graphics.newParticleSystem(self.partic.img, 150)
+      self.particles:setEmissionArea(
+         "uniform",
+         self.shape:getRadius()*0.7,
+         self.shape:getRadius()*0.7,
+         0,
+         false
+      )
+      self.particles:setParticleLifetime(0.3, 0.3)
+      self.particles:setEmissionRate(95)
+      self.particles:setSizes(1.5, 0.5)
+      self.particles:setSpeed(0, 0)
+      self.particles:setColors(
+         self.partic.color,
+         self.partic.color2
+      )
+
+      --self.particles:stop()
    end
 
-   function b:update()
+   function b:update(dt)
+      self.particles:update(dt)
+      if self.particles:isActive() then
+         local x, y = self.body:getLinearVelocity()
+         local velocity = (x+y)/2
+         if velocity < 0 then
+            velocity = -velocity
+         end
+         x = x + self.body:getX()
+         y = y + self.body:getY()
+         local angle = math.atan2((y - self.body:getY()), (x - self.body:getX()))
+         self.particles:setDirection(angle + math.pi)
+         self.particles:setSpeed(velocity, velocity * 2)
+         self.partic.x, self.partic.y = self.body:getPosition()
+      end
       if self.body:getX() < self.wx1 - (self.r/2) or self.body:getX() > self.wx2 + (self.r/2) then
          self.body:setPosition(winW / 2, winH / 2)
       end
    end
 
    function b:draw()
+      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
       love.graphics.setColor(1, 1, 1)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end

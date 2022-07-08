@@ -22,7 +22,7 @@ end
 
 function love.update(dt)
    world:update(dt)
-   scenes[currentScene]:update()
+   scenes[currentScene]:update(dt)
 
    if love.keyboard.isDown("escape") then
       love.event.quit()

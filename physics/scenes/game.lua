@@ -42,21 +42,25 @@ function gameS:load()
    balon:load(paredes.p2.body:getX(), paredes.p3.body:getX())
 end
 
-function gameS:update()
+function gameS:update(dt)
    for key in pairs(balls) do
       balls[key]:update()
       balls[key]:updateLine()
+      balls[key]:particleUpdate(dt)
    end
 
    areBallsStoped()
 
-   balon:update()
+   balon:update(dt)
 
    mouseX, mouseY = love.mouse.getPosition()
 end
 
 function gameS:draw()
    paredes:draw()
+   for key in pairs(balls) do
+      balls[key]:drawParticles()
+   end
    for key in pairs(balls) do
       balls[key]:draw()
    end
