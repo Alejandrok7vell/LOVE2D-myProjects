@@ -2,6 +2,7 @@ require 'libs.utils'
 require 'ball'
 require 'winMargin'
 require 'libs.trigonometry'
+require 'scenes.golAnimation'
 
 gameS = {}
 
@@ -17,6 +18,14 @@ function gameS:load()
       table.insert(balls, newBall(i))
       balls[i]:setUD("ball"..i)
    end
+
+   isGol = false
+
+   players = {
+      "Player1",
+      "Player2",
+      0, 0
+   }
 
    balls[1]:load(200, 200, 50)
    balls[2]:load(400, 300, 50)
@@ -40,12 +49,16 @@ function gameS:load()
 
    balon = newBalon()
    balon:load(paredes.p2.body:getX(), paredes.p3.body:getX())
+
+   anim.gol:load()
 end
 
 function gameS:update(dt)
    for key in pairs(balls) do
-      balls[key]:update()
-      balls[key]:updateLine()
+      if not isGol then
+         balls[key]:update()
+         balls[key]:updateLine()
+      end
       balls[key]:particleUpdate(dt)
    end
 
@@ -54,6 +67,10 @@ function gameS:update(dt)
    balon:update(dt)
 
    mouseX, mouseY = love.mouse.getPosition()
+
+   if isGol then
+      anim.gol:update()
+   end
 end
 
 function gameS:draw()
@@ -67,6 +84,10 @@ function gameS:draw()
    balon:draw()
    for key in pairs(balls) do
       balls[key]:drawLine()
+   end
+
+   if isGol then
+      anim.gol:draw()
    end
 end
 
@@ -119,4 +140,15 @@ function lockBalls(s)
    for key in pairs(balls) do
       balls[key].locked = s
    end
+end
+
+function gol(s)
+   isGol = true
+   if s == 1 then
+      players[3] = players[3] + 1
+   elseif s == 2 then
+      players[4] = players[4] + 1
+   end
+
+   anim.gol:load(s)
 end

@@ -400,8 +400,10 @@ function newBalon()
          self.particles:setSpeed(velocity, velocity * 2)
          self.partic.x, self.partic.y = self.body:getPosition()
       end
-      if self.body:getX() < self.wx1 - (self.r/2) or self.body:getX() > self.wx2 + (self.r/2) then
-         self.body:setPosition(winW / 2, winH / 2)
+      if self.body:getX() < self.wx1 - (self.r/2) then
+         gol(1)
+      elseif self.body:getX() > self.wx2 + (self.r/2) then
+         gol(2)
       end
    end
 
