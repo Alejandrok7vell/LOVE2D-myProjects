@@ -158,6 +158,7 @@ function newBall()
    end
 
    function ball:drawParticles()
+      love.graphics.setColor(1,1,1)
       love.graphics.draw(self.particles, self.partic.x, self.partic.y)
    end
 
@@ -408,8 +409,8 @@ function newBalon()
    end
 
    function b:draw()
-      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
       love.graphics.setColor(1, 1, 1)
+      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end
 
