@@ -5,8 +5,10 @@ require 'libs.trigonometry'
 require 'scenes.golAnimation'
 
 gameS = {}
+gameS.isLoaded = false
 
 function gameS:load()
+   gameS.isLoaded = true
    love.graphics.setBackgroundColor(toRGB(100, 130, 180))
    team = 2
 
@@ -44,6 +46,10 @@ function gameS:load()
 end
 
 function gameS:update(dt)
+   if not self.isLoaded then
+      self:load()
+   end
+
    for key in pairs(balls) do
       if not isGol then
          balls[key]:update()
@@ -66,20 +72,23 @@ function gameS:update(dt)
 end
 
 function gameS:draw()
-   paredes:draw()
-   for key in pairs(balls) do
-      balls[key]:drawParticles()
-   end
-   for key in pairs(balls) do
-      balls[key]:draw()
-   end
-   balon:draw()
-   for key in pairs(balls) do
-      balls[key]:drawLine()
-   end
+   if self.isLoaded then
 
-   if isGol then
-      anim.gol:draw()
+      paredes:draw()
+      for key in pairs(balls) do
+         balls[key]:drawParticles()
+      end
+      for key in pairs(balls) do
+         balls[key]:draw()
+      end
+      balon:draw()
+      for key in pairs(balls) do
+         balls[key]:drawLine()
+      end
+
+      if isGol then
+         anim.gol:draw()
+      end
    end
 end
 

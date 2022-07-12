@@ -57,3 +57,8 @@ end
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)
    -- nothing for now
 end
+
+function changeScene(s)
+   currentScene = s
+   scenes[currentScene]:load()
+end
