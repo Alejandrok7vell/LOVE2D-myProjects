@@ -1,8 +1,8 @@
 paredes = {}
 
-function paredes:load(x, y, w, h, z)
+function paredes:load(x, y, w, h, z, w1)
    local a = (h - z) / 2
-   local cw = 65
+   local cw = w1
    self.p1 = {} -- Up
    self.p1.body = love.physics.newBody(world, x, y-(h/2)-10, "static")
    self.p1.shape = love.physics.newRectangleShape(w + 40, 20)

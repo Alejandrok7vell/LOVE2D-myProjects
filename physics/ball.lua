@@ -4,11 +4,11 @@ function newBall()
    function ball:load(x, y, r, t)
       self.x, self.y = x or 100, y or 100
       self.xVel, self.yVel = 0, 0
-      self.impulse = 4500
+      self.impulse = 3000
       self.r = r or 20
       self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
       self.shape = love.physics.newCircleShape(self.r)
-      self.fixture = love.physics.newFixture(self.body, self.shape, 1.5)
+      self.fixture = love.physics.newFixture(self.body, self.shape, 2.5)
       self.fixture:setUserData(self.ud)
       self.team = t or 1
       self.isTeam = true
@@ -343,7 +343,7 @@ end
 function newBalon()
    local b = {}
    function b:load(x1, x2)
-      self.x, self.y = winW / 2, winH / 2
+      self.x, self.y = board.x, board.y
       self.wx1, self.wx2 = x1, x2
       self.r = 20
       self.color = toRGB(255, 255, 255)

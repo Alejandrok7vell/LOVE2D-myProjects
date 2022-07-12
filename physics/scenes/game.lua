@@ -10,7 +10,7 @@ gameS.isLoaded = false
 function gameS:load()
    gameS.isLoaded = true
    love.graphics.setBackgroundColor(toRGB(100, 130, 180))
-   team = 2
+   team = 1
 
    balls = {}
    ballsLength = 10
@@ -32,11 +32,15 @@ function gameS:load()
    for key in pairs(balls) do
       balls[key]:setCurrentTeam(team)
    end
-   paredes:load(
-      winW/2, winH/2 + 50,
-      winW-180, winH-175,
-      winH / 3
-   )
+
+   board = {
+      x = winW/2, y = winH/2 + 50,
+      w = winW-180, h = winH-175,
+      z = winH/3, cw = 65
+   }
+   positions = require("positions")
+
+   paredes:load(board.x, board.y, board.w, board.h, board.z, board.cw)
 
    balon = newBalon()
    balon:load(paredes.p2.body:getX(), paredes.p3.body:getX())
@@ -156,32 +160,34 @@ end
 
 function loadPositions()
    local r = 40
-   balls[1]:load(200, 200, r)
-   balls[2]:load(400, 300, r)
-   balls[3]:load(100, 500, r)
-   balls[4]:load(500, 100, r)
-   balls[5]:load(300, 300, r)
-   balls[6]:load(600, 100, r, 2)
-   balls[7]:load(650, 200, r, 2)
-   balls[8]:load(500, 300, r, 2)
-   balls[9]:load(500, 400, r, 2)
-   balls[10]:load(500, 500, r, 2)
+   local p = positions
+   balls[1]:load(p.p1[1][1].x, p.p1[1][1].y, r)
+   balls[2]:load(p.p1[1][2].x, p.p1[1][2].y, r)
+   balls[3]:load(p.p1[1][3].x, p.p1[1][3].y, r)
+   balls[4]:load(p.p1[1][4].x, p.p1[1][4].y, r)
+   balls[5]:load(p.p1[1][5].x, p.p1[1][5].y, r)
+   balls[6]:load(p.p2[1][1].x, p.p2[1][1].y, r, 2)
+   balls[7]:load(p.p2[1][2].x, p.p2[1][2].y, r, 2)
+   balls[8]:load(p.p2[1][3].x, p.p2[1][3].y, r, 2)
+   balls[9]:load(p.p2[1][4].x, p.p2[1][4].y, r, 2)
+   balls[10]:load(p.p2[1][5].x, p.p2[1][5].y, r, 2)
 end
 
 function setPositions()
+   balon.body:setLinearVelocity(0, 0)
    for key in pairs(balls) do
       balls[key].body:setLinearVelocity(0, 0)
    end
-   balon.body:setLinearVelocity(0, 0)
-   balls[1].body:setPosition(200, 200)
-   balls[2].body:setPosition(400, 300)
-   balls[3].body:setPosition(100, 500)
-   balls[4].body:setPosition(300, 300)
-   balls[5].body:setPosition(600, 100)
-   balls[6].body:setPosition(650, 200)
-   balls[7].body:setPosition(500, 300)
-   balls[8].body:setPosition(500, 400)
-   balls[9].body:setPosition(500, 500)
-   balls[10].body:setPosition(500, 100)
-   balon.body:setPosition(winW / 2, winH / 2)
+   local p = positions
+   balls[1].body:setPosition(p.p1[1][1].x, p.p1[1][1].y)
+   balls[2].body:setPosition(p.p1[1][2].x, p.p1[1][2].y)
+   balls[3].body:setPosition(p.p1[1][3].x, p.p1[1][3].y)
+   balls[4].body:setPosition(p.p1[1][4].x, p.p1[1][4].y)
+   balls[5].body:setPosition(p.p1[1][5].x, p.p1[1][5].y)
+   balls[6].body:setPosition(p.p2[1][1].x, p.p2[1][1].y)
+   balls[7].body:setPosition(p.p2[1][2].x, p.p2[1][2].y)
+   balls[8].body:setPosition(p.p2[1][3].x, p.p2[1][3].y)
+   balls[9].body:setPosition(p.p2[1][4].x, p.p2[1][4].y)
+   balls[10].body:setPosition(p.p2[1][5].x, p.p2[1][5].y)
+   balon.body:setPosition(board.x, board.y)
 end
