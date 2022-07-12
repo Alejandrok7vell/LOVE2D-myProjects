@@ -33,8 +33,8 @@ function gameS:load()
       balls[key]:setCurrentTeam(team)
    end
    paredes:load(
-      winW/2, winH/2,
-      winW-300, winH-150,
+      winW/2, winH/2 + 50,
+      winW-180, winH-175,
       winH / 3
    )
 
@@ -155,16 +155,17 @@ function gol(s)
 end
 
 function loadPositions()
-   balls[1]:load(200, 200, 50)
-   balls[2]:load(400, 300, 50)
-   balls[3]:load(100, 500, 50)
-   balls[4]:load(500, 100, 50)
-   balls[5]:load(300, 300, 50)
-   balls[6]:load(600, 100, 50, 2)
-   balls[7]:load(650, 200, 50, 2)
-   balls[8]:load(500, 300, 50, 2)
-   balls[9]:load(500, 400, 50, 2)
-   balls[10]:load(500, 500, 50, 2)
+   local r = 40
+   balls[1]:load(200, 200, r)
+   balls[2]:load(400, 300, r)
+   balls[3]:load(100, 500, r)
+   balls[4]:load(500, 100, r)
+   balls[5]:load(300, 300, r)
+   balls[6]:load(600, 100, r, 2)
+   balls[7]:load(650, 200, r, 2)
+   balls[8]:load(500, 300, r, 2)
+   balls[9]:load(500, 400, r, 2)
+   balls[10]:load(500, 500, r, 2)
 end
 
 function setPositions()
