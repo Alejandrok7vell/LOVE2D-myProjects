@@ -5,7 +5,7 @@ function anim.gol:load(s)
    self.size = 300
    self.vel = 400
    self.acel = 20
-   self.maxVel = 4000
+   self.maxVel = 3700
    self.dir = "right"
 
    self.font = love.graphics.newFont(
