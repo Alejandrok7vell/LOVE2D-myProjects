@@ -1,3 +1,5 @@
+require 'libs.buttons'
+
 mainS = {}
 mainS.isLoaded = false
 

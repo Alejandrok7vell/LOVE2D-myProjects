@@ -2,18 +2,19 @@ anim = {}
 anim.gol = {}
 
 function anim.gol:load(s)
-   self.size = 300
+   self.size = 500
    self.vel = 400
    self.acel = 20
-   self.maxVel = 3500
+   self.maxVel = 5000
    self.dir = "right"
 
    self.font = love.graphics.newFont(
       "assets/fonts/8bitOperatorPlus8-Bold.ttf", self.size,"normal"
    )
    self.color = {1, 1, 1, 1}
+   self.string = "GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL"
 
-   self.txt = love.graphics.newText(self.font, "GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
+   self.txt = love.graphics.newText(self.font, self.string)
 
    self.width = self.txt:getWidth()
 
@@ -28,8 +29,7 @@ function anim.gol:load(s)
    end
 
    --self.y = (winH / 2) - (self.txt:getHeight() / 2)
-   self.y = winH - self.size
-   print(self.font:getHeight())
+   self.y = (winH/2) - (309/2)
 end
 
 function anim.gol:update(dt)
