@@ -9,17 +9,17 @@ function Button:update()
 end
 
 function Button:draw()
-   self.draw()
+   self.drawF()
 end
 
-function Button:new(x, y, w, h, func, draw)
+function Button:new(x, y, w, h, func, drawF)
    local instance = setmetatable({}, Button)
    self.x, self.y = x, y
    self.w, self.h = w, h
    self.func = func or function()
       currentScene = currentScene - 1
    end
-   self.draw = draw or function()
+   self.drawF = drawF or function()
       love.graphics.setColor(1, 0, 0)
       love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
    end

@@ -4,7 +4,7 @@ require 'scenes.principal'
 function love.load()
    love.graphics.setBackgroundColor(0.1, 0.3, 1)
 
-   currentScene = 2
+   currentScene = 1
    winW, winH = love.graphics.getDimensions()
 
    mouseP = false
