@@ -1,9 +1,10 @@
 require 'scenes.game'
+require 'scenes.principal'
 
 function love.load()
    love.graphics.setBackgroundColor(0.1, 0.3, 1)
 
-   currentScene = 1
+   currentScene = 2
    winW, winH = love.graphics.getDimensions()
 
    mouseP = false
@@ -15,6 +16,7 @@ function love.load()
       world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
    scenes = {}
+   table.insert(scenes, mainS)
    table.insert(scenes, gameS)
 
    scenes[currentScene]:load()
@@ -37,7 +39,7 @@ end
 function beginContact(x, y, coll)
    local a, b = x, y
    local colision = coll
-   if currentScene == 1 then
+   if currentScene == 2 then
       scenes[currentScene]:beginContact(a, b, colision)
    end
 end
@@ -49,7 +51,7 @@ end
 function preSolve(x, y, coll)
    local a, b = x, y
    local colision = coll
-   if currentScene == 1 then
+   if currentScene == 2 then
       scenes[currentScene]:preSolve(a, b, colision)
    end
 end

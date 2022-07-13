@@ -5,7 +5,7 @@ function anim.gol:load(s)
    self.size = 300
    self.vel = 400
    self.acel = 20
-   self.maxVel = 3700
+   self.maxVel = 3500
    self.dir = "right"
 
    self.font = love.graphics.newFont(
@@ -27,7 +27,9 @@ function anim.gol:load(s)
       self.maxVel = -self.maxVel
    end
 
-   self.y = winH / 2 - (self.txt:getHeight()/2)
+   --self.y = (winH / 2) - (self.txt:getHeight() / 2)
+   self.y = winH - self.size
+   print(self.font:getHeight())
 end
 
 function anim.gol:update(dt)

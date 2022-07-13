@@ -309,30 +309,32 @@ function newBall()
 
    function ball.beginContact(a, b)
       local data1, data2 = a, b
+      local force = 10
       if data1 == ball.ud or data2 == ball.ud then
          if data1 == "wallUp" or data2 == "wallUp" then
-            ball.body:applyLinearImpulse(0, 10)
+            ball.body:applyLinearImpulse(0, force)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
-            ball.body:applyLinearImpulse(10, 0)
+            ball.body:applyLinearImpulse(force, 0)
          elseif data1 == "wallRight" or data2 == "wallRight" then
-            ball.body:applyLinearImpulse(-10, 0)
+            ball.body:applyLinearImpulse(-force, 0)
          elseif data1 == "wallDown" or data2 == "wallDown" then
-            ball.body:applyLinearImpulse(0, -10)
+            ball.body:applyLinearImpulse(0, -force)
          end
       end
    end
 
    function ball.preSolve(a, b)
       local data1, data2 = a, b
+      local force = 10
       if data1 == ball.ud or data2 == ball.ud then
          if data1 == "wallUp" or data2 == "wallUp" then
-            ball.body:applyLinearImpulse(0, 10)
+            ball.body:applyLinearImpulse(0, force)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
-            ball.body:applyLinearImpulse(10, 0)
+            ball.body:applyLinearImpulse(force, 0)
          elseif data1 == "wallRight" or data2 == "wallRight" then
-            ball.body:applyLinearImpulse(-10, 0)
+            ball.body:applyLinearImpulse(-force, 0)
          elseif data1 == "wallDown" or data2 == "wallDown" then
-            ball.body:applyLinearImpulse(0, -10)
+            ball.body:applyLinearImpulse(0, -force)
          end
       end
    end
@@ -417,19 +419,20 @@ function newBalon()
    function b.beginContact(a, c, x)
       local data1, data2 = a, c
       local cx = x
+      local force = 5
       if data1 == "balon" or data2 == "balon" then
          if data1 == "wallUp" or data2 == "wallUp" then
-            b.body:applyLinearImpulse(0, 5)
+            b.body:applyLinearImpulse(0, force)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
             if cx == 1 then
-               b.body:applyLinearImpulse(5, 0)
+               b.body:applyLinearImpulse(force, 0)
             end
          elseif data1 == "wallRight" or data2 == "wallRight" then
             if cx == -1 then
-               b.body:applyLinearImpulse(-5, 0)
+               b.body:applyLinearImpulse(-force, 0)
             end
          elseif data1 == "wallDown" or data2 == "wallDown" then
-            b.body:applyLinearImpulse(0, -5)
+            b.body:applyLinearImpulse(0, -force)
          end
       end
    end
@@ -437,19 +440,20 @@ function newBalon()
    function b.preSolve(a, c, x)
       local data1, data2 = a, c
       local cx = x
+      local force = 5
       if data1 == "balon" or data2 == "balon" then
          if data1 == "wallUp" or data2 == "wallUp" then
-            b.body:applyLinearImpulse(0, 5)
+            b.body:applyLinearImpulse(0, force)
          elseif data1 == "wallLeft" or data2 == "wallLeft" then
             if cx == 1 then
-               b.body:applyLinearImpulse(5, 0)
+               b.body:applyLinearImpulse(force, 0)
             end
          elseif data1 == "wallRight" or data2 == "wallRight" then
             if cx == -1 then
-               b.body:applyLinearImpulse(-5, 0)
+               b.body:applyLinearImpulse(-force, 0)
             end
          elseif data1 == "wallDown" or data2 == "wallDown" then
-            b.body:applyLinearImpulse(0, -5)
+            b.body:applyLinearImpulse(0, -force)
          end
       end
    end
