@@ -2,8 +2,8 @@ Button = {}
 Button.__index = Button
 
 function Button:update()
-   if mouseX >= self.x and mouseX <= self.x + self.w and
-      mouseY >= self.y and mouseY <= self.y + self.h then
+   if mouseX > self.x and mouseX < self.x + self.w and
+      mouseY > self.y and mouseY < self.y + self.h then
       self:func()
    end
 end

@@ -49,8 +49,6 @@ function newBall()
       -- ball trail
       self.partic = {
          img = love.graphics.newImage("assets/particles/1.png"),
-         x = self.body:getX(),
-         y = self.body:getY(),
          color = self.color,
          color2 = self.color2,
          speed = 300
@@ -88,7 +86,7 @@ function newBall()
          local angle = math.atan2((y - self.body:getY()), (x - self.body:getX()))
          self.particles:setDirection(angle + math.pi)
          self.particles:setSpeed(velocity, velocity * 2)
-         self.partic.x, self.partic.y = self.body:getPosition()
+         self.particles:setPosition(self.body:getX(), self.body:getY())
       end
    end
 
@@ -159,7 +157,7 @@ function newBall()
 
    function ball:drawParticles()
       love.graphics.setColor(1,1,1)
-      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
+      love.graphics.draw(self.particles)
    end
 
    function ball:shoot()
@@ -362,8 +360,6 @@ function newBalon()
       -- balon trail
       self.partic = {
          img = love.graphics.newImage("assets/particles/1.png"),
-         x = self.body:getX(),
-         y = self.body:getY(),
          color = self.color,
          color2 = self.color2,
          speed = 300
@@ -401,7 +397,7 @@ function newBalon()
          local angle = math.atan2((y - self.body:getY()), (x - self.body:getX()))
          self.particles:setDirection(angle + math.pi)
          self.particles:setSpeed(velocity, velocity * 2)
-         self.partic.x, self.partic.y = self.body:getPosition()
+         self.particles:setPosition(self.body:getX(), self.body:getY())
       end
       if self.body:getX() < self.wx1 - (self.r/2) then
          gol(1)
@@ -412,7 +408,7 @@ function newBalon()
 
    function b:draw()
       love.graphics.setColor(1, 1, 1)
-      love.graphics.draw(self.particles, self.partic.x, self.partic.y)
+      love.graphics.draw(self.particles)
       love.graphics.circle("fill", self.body:getX(), self.body:getY(), self.shape:getRadius())
    end
 

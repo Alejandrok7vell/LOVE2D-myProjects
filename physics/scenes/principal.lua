@@ -9,6 +9,7 @@ function mainS:load()
 end
 
 function mainS:update()
+    mouseX, mouseY = love.mouse.getPosition()
     if not self.isLoaded then
         self:load()
     end
