@@ -4,24 +4,30 @@ Button.__index = Button
 function Button:update()
    if mouseX >= self.x and mouseX <= self.x + self.w and
       mouseY >= self.y and mouseY <= self.y + self.h then
-      self.func()
+      self:func()
    end
 end
 
 function Button:draw()
-   self.drawF()
+   self:drawF()
 end
 
-function Button:new(x, y, w, h, func, drawF)
-   local instance = setmetatable({}, Button)
-   self.x, self.y = x, y
-   self.w, self.h = w, h
-   self.func = func or function()
-      currentScene = currentScene - 1
-   end
-   self.drawF = drawF or function()
-      love.graphics.setColor(1, 0, 0)
-      love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-   end
+PlayButton = {}
+PlayButton.__index = PlayButton
+setmetatable(PlayButton, Button)
+
+function PlayButton:func()
+   changeScene(2)
+end
+
+function PlayButton:drawF()
+   love.graphics.setColor(0, 1, 0)
+   love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+end
+
+function PlayButton.new(x, y, w, h)
+   local instance = setmetatable({}, PlayButton)
+   instance.x, instance.y = x, y
+   instance.w, instance.h = w, h
    return instance
 end
