@@ -4,7 +4,8 @@
       "redundant-parameter",
       "lowercase-global",
       "param-type-mismatch",
-      "missing-parameter"
+      "missing-parameter",
+      "undefined-field"
    ],
    "Lua.runtime.version": "LuaJIT",
    "Lua.workspace.library": [
