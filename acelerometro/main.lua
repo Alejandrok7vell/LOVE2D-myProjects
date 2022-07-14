@@ -1,15 +1,15 @@
 function love.load()
    x = 0
    y = 0
-   z = 0
    s = 10
    vel = 10
+   pj = love.joystick:getJoysticks()[1]
 end
 
 function love.update(dt)
    if pj ~= nil then
-      x = x + (pj:getGamepadAxis("leftx") * vel) * dt
-      y = y + (pj:getGamepadAxis("lefty") * vel) * dt
+      x = x + (pj:getAxis(1) * vel) * dt
+      y = y + (pj:getAxis(2) * vel) * dt
    end
    lockPos()
 end
@@ -18,10 +18,7 @@ function love.draw()
    love.graphics.setBackgroundColor(1,1,1)
    love.graphics.setColor(0,0,0)
    love.graphics.rectangle("fill", x, y, s, s)
-end
-
-function love.joystickadded(joystick)
-   pj = joystick
+   love.graphics.print(pj:getAxis(3))
 end
 
 function lockPos()
